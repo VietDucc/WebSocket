@@ -30,5 +30,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(4000, () =>
-  console.log("WebSocket server running on http://localhost:4000")
+  console.log("WebSocket server running on http://localhost:3000")
 );
