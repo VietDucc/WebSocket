@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-repo-url.git' // URL đến repo của bạn
+                git 'https://github.com/VietDucc/WebSocket.git' // URL đến repo của bạn
             }
         }
         stage('Build Backend') {
