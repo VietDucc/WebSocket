@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 4000
 
 # Command to run the app (assuming you have a pre-built frontend)
 CMD ["npm", "start"]
