@@ -17,7 +17,7 @@ RUN npm ci
 COPY . /usr/src/app
 
 # Mở cổng mà server WebSocket sẽ lắng nghe
-EXPOSE 3000
+EXPOSE 4000
 
 # Lệnh để khởi động server WebSocket
 CMD [ "node", "backend/server-websocket.js" ]
