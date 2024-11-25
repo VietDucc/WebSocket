@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Example</title>
+  </head>
+  <body>
+    <h1>WebSocket Example</h1>
+    <p><strong>Server Time:</strong> <span id="time">N/A</span></p>
+    <p>
+      <strong>Active Connections:</strong> <span id="connections">N/A</span>
+    </p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const timeElem = document.getElementById("time");
+      const connectionsElem = document.getElementById("connections");
+
+      const socket = io();
+
+      socket.on("serverData", (data) => {
+        timeElem.textContent = data.time;
+        connectionsElem.textContent = data.connections;
+      });
+
+      socket.on("connect", () => {
+        console.log("WebSocket connected");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("WebSocket disconnected");
+      });
+    </script>
+  </body>
+</html>
