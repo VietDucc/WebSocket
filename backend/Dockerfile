@@ -1,22 +1,31 @@
-# Sử dụng Node.js làm base image
-FROM node:18
+# syntax=docker/dockerfile:1.4
 
-# Set working directory
-WORKDIR /app
+FROM node:lts-buster-slim AS development
 
-# Copy các file cần thiết
-COPY package*.json ./
+# Create app directory
+WORKDIR /usr/src/app
 
-# Cài đặt dependencies
-RUN npm install
+COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
+RUN npm ci
 
+COPY . /usr/src/app
 
-
-# Copy toàn bộ source code
-COPY . .
-
-# Expose port của backend
 EXPOSE 8081
 
-# Chạy server WebSocket
-CMD ["node", "server-websocket.js"]
+CMD [ "npm", "run", "dev" ]
+
+FROM development as dev-envs
+RUN <<EOF
+apt-get update
+apt-get install -y --no-install-recommends git
+EOF
+
+RUN <<EOF
+useradd -s /bin/bash -m vscode
+groupadd docker
+usermod -aG docker vscode
+EOF
+# install Docker tools (cli, buildx, compose)
+COPY --from=gloursdocker/docker / /
+CMD [ "npm", "run", "dev" ]
