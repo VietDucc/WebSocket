@@ -3,32 +3,24 @@ version: '3'
 services:
   frontend:
     build:
-      context: frontend
-      target: development
+      context: .
+      dockerfile: Dockerfile-frontend
     ports:
-      - 4000:4000
-    stdin_open: true
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
+      - "4001:80"  # Mở cổng 4001 cho frontend
     restart: always
     networks:
-      - react-express
-    depends_on:
-      - backend
+      - websocket-network
 
   backend:
-    restart: always
     build:
-      context: backend
-      target: development
-    volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      context: .
+      dockerfile: Dockerfile-backend
+    ports:
+      - "4000:4000"  # Mở cổng 4000 cho backend (WebSocket server)
+    restart: always
     networks:
-      - react-express
-    expose:
-      - 4000
+      - websocket-network
 
 networks:
-  react-express:
+  websocket-network:
+    driver: bridge
