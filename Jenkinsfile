@@ -1,38 +1,37 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/VietDucc/WebSocket.git'
+                checkout scm // Lấy mã nguồn từ repository
             }
         }
-        stage('Build Backend') {
+
+        stage('Build Docker Images') {
             steps {
-                dir('backend') {
-                    script {
-                        sh 'docker build -t websocket-backend .'
-                    }
+                script {
+                    sh 'docker-compose down' // Dừng các container cũ
+                    sh 'docker-compose build' // Build các images từ Dockerfile
                 }
             }
         }
-        stage('Build Frontend') {
+
+        stage('Deploy Services') {
             steps {
-                dir('frontend') {
-                    script {
-                        sh 'docker build -t websocket-frontend .'
-                    }
+                script {
+                    echo 'Starting Docker Compose with specified file'
+                    sh 'docker-compose -f compose.yaml up -d'
                 }
             }
-        }
-        stage('Deploy') {
+}
+
+
+        stage('Verify Deployment') {
             steps {
-                sh 'docker-compose up -d'
+                script {
+                    sh 'docker ps' // Kiểm tra các container đang chạy
+                }
             }
-        }
-    }
-    post {
-        always {
-            sh 'docker-compose down' // Ngắt container nếu cần
         }
     }
 }
