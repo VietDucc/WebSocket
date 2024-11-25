@@ -42,4 +42,4 @@ EOF
 COPY --from=gloursdocker/docker / /
 
 # Lệnh khởi động lại server WebSocket trong môi trường phát triển
-CMD [ "node", "backend/server-websocket.js" ]
+CMD [ "node", "server-websocket.js" ]
