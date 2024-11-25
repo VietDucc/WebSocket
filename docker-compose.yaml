@@ -6,7 +6,7 @@ services:
       context: frontend
       target: development
     ports:
-      - 3000:3000
+      - 4000:4000
     stdin_open: true
     volumes:
       - ./frontend:/usr/src/app
@@ -28,7 +28,7 @@ services:
     networks:
       - react-express
     expose:
-      - 3000
+      - 4000
 
 networks:
   react-express:
