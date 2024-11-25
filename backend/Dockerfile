@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Cài đặt dependencies
-RUN npm ci
+RUN npm install
+
 
 
 # Copy toàn bộ source code
