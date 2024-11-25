@@ -4,7 +4,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile-frontend
+      dockerfile: Dockerfile
     ports:
       - "4001:80"  # Mở cổng 4001 cho frontend
     restart: always
@@ -14,7 +14,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile-backend
+      dockerfile: Dockerfile
     ports:
       - "4000:4000"  # Mở cổng 4000 cho backend (WebSocket server)
     restart: always
